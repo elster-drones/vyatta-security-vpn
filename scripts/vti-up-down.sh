@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 ## Script called up strongswan to bring the vti interface up/down based on the state of the IPsec tunnel.
 ## Called as vti_up_down vti_intf_name
 #

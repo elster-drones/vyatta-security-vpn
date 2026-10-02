@@ -1,3 +1,10 @@
+vyatta-security-vpn (2.14+elster1) unstable; urgency=medium
+
+  * Use POSIX redirection for commands invoked through /bin/sh.
+  * Run the Bash IPsec up/down scripts with Bash on Debian 13.
+
+ -- Erik Ziegenbalg <erikziege@gmail.com>  Fri, 02 Oct 2026 01:35:39 +0000
+
 vyatta-security-vpn (2.14) unstable; urgency=medium
 
   [ kalaivani vinothkumar ]

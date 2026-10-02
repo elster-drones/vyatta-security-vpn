@@ -144,7 +144,7 @@ if ( $vcVPN->exists('l2tp remote-access') ) {
   if (defined ($l2tp_intf)) {
     chomp($l2tp_intf);
     $l2tp_intf =~ s/\./\//g;
-    vpn_exec("sysctl net.ipv4.conf.$l2tp_intf.disable_policy=1 >&/dev/null",
+    vpn_exec("sysctl net.ipv4.conf.$l2tp_intf.disable_policy=1 >/dev/null 2>&1",
              'VPN toggle net.ipv4.conf.intf.disable_policy');
   }
 } elsif ( $vcVPN->isDeleted('l2tp remote-access') && !$vcVPN->exists('ipsec esp-group') ) {
@@ -158,7 +158,7 @@ if ( $vcVPN->exists('l2tp remote-access') ) {
   unless ($l2tp_intf eq '') {
     chomp($l2tp_intf);
     $l2tp_intf =~ s/\./\//g;
-    vpn_exec("sysctl net.ipv4.conf.$l2tp_intf.disable_policy=0 >&/dev/null",
+    vpn_exec("sysctl net.ipv4.conf.$l2tp_intf.disable_policy=0 >/dev/null 2>&1",
              'VPN toggle net.ipv4.conf.<intf>.disable_policy');
   }
 }
@@ -1380,7 +1380,7 @@ if ( $vcVPN->isDeleted('.')
   }
   if ( is_vpn_running() ) {
     toggle_xfrm_policy(0);
-    vpn_exec( 'ipsec stop >&/dev/null', 'stop ipsec' );
+    vpn_exec( 'ipsec stop >/dev/null 2>&1', 'stop ipsec' );
   }
   if ( !enableICMP('1') ) {
     vpn_die(["security", "vpn", "ipsec"],
@@ -1445,8 +1445,8 @@ EOF
                 vpn_exec( "ipsec stroke down-nb '${conn}{*}'",
                           "down-nb deleted/changed Child SA for connection: '$conn'" );
             }
-	    vpn_exec( 'ipsec rereadall >&/dev/null', 're-read secrets' );
-	    vpn_exec( 'ipsec update >&/dev/null',
+	    vpn_exec( 'ipsec rereadall >/dev/null 2>&1', 're-read secrets' );
+	    vpn_exec( 'ipsec update >/dev/null 2>&1',
 		      'update changes to ipsec.conf and update' );
         }
     } else {
@@ -1634,16 +1634,16 @@ sub disable_xfrm_policy {
 
   $skip_ipv6 = ( ! -f $FEAT_ENABLE_IPV6 ) unless defined($skip_ipv6);
 
-  vpn_exec("sysctl net.ipv4.conf.'$intf'.disable_policy=$on >&/dev/null",
+  vpn_exec("sysctl net.ipv4.conf.'$intf'.disable_policy=$on >/dev/null 2>&1",
 	     'VPN toggle net.ipv4.conf.intf.disable_policy');
-  vpn_exec("sysctl net.ipv4.conf.'$intf'.disable_xfrm=$on >&/dev/null",
+  vpn_exec("sysctl net.ipv4.conf.'$intf'.disable_xfrm=$on >/dev/null 2>&1",
 	     'VPN toggle net.ipv4.conf.intf.disable_xfrm');
   if ( !$skip_ipv6 ) {
       #
       # For IPv6 the kernel provides just disable_policy; unlike IPv4
       # there is no disable_xfrm option.
       #
-      vpn_exec("sysctl net.ipv6.conf.'$intf'.disable_policy=$on >&/dev/null",
+      vpn_exec("sysctl net.ipv6.conf.'$intf'.disable_policy=$on >/dev/null 2>&1",
 	       'VPN toggle net.ipv6.conf.intf.disable_policy');
   }
 }

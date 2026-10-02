@@ -63,8 +63,8 @@ sub clear_tunnel {
   # Queue terminate/initiate in charon job queues with non-blocking stroke calls.
   # charon/control schedules both with the same priority (medium).
   my $suffix = $childSA ? "{*}" : "";
-  `ipsec stroke down-nb '$conn$suffix' >&/dev/null`;
-  `ipsec stroke up-nb '$conn' >&/dev/null`;
+  `ipsec stroke down-nb '$conn$suffix' >/dev/null 2>&1`;
+  `ipsec stroke up-nb '$conn' >/dev/null 2>&1`;
 
   return;
 }

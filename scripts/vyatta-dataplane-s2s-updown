@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Script called by strongSwan updown plugin when an IPsec CHILD_SA gets
 # established or deleted.
