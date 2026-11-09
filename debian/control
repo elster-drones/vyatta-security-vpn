@@ -25,15 +25,15 @@ Build-Depends:
  libperl-critic-perl,
  netbase,
  perl:native,
- pylint3 | pylint,
+ pylint,
  python3:native,
  python3-dbus:native,
  python3-gi:native,
- python3-pyinotify,
- python3-vci,
- python3-sdnotify,
- python3-pysnmp4,
- python3-vici | python-vici,
+ python3-pyinotify:native,
+ python3-vci:native,
+ python3-sdnotify:native,
+ python3-pysnmp4:native,
+ python3-vici:native,
  vyatta-mibs-misc
 Standards-Version: 3.9.6
 
