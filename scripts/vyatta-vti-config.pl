@@ -186,7 +186,7 @@ if (!$vcVPN->exists('ipsec site-to-site') ) {
             if ($vtiPresent ne $tunName) {
                 # Binding changed.
 		my $currMark = isVtimarkpresent($peer, $lip);
-		$gencmds .= "/sbin/ip link delete $vtiPresent &> /dev/null\n";
+		$gencmds .= "/sbin/ip link delete $vtiPresent >/dev/null 2>&1\n";
 		deleteVtibyname($vtiPresent);
                 $change = 1;
             }
@@ -216,7 +216,7 @@ if (!$vcVPN->exists('ipsec site-to-site') ) {
         #
         # By default we delete the tunnel...
 	my $genmark = $mark;
-	$gencmds .= "/sbin/ip link delete $tunName &> /dev/null\n";
+	$gencmds .= "/sbin/ip link delete $tunName >/dev/null 2>&1\n";
 	if ( NetAddr::IP->new($peer)->version() == 4 ) {
 	    $gencmds .= "/sbin/ip tunnel add $tunName mode vti remote $peer local $lip key $genmark nopmtudisc\n";
 	    foreach my $tunIP (@tunIPs) {
@@ -347,7 +347,7 @@ sub cleanupVtiNotConfigured {
     }
     for my $name (keys %$localVtibyNames) {
 	$gencmds .= "#For tunnel name $name.\n";
-        $gencmds .= "/sbin/ip link delete $name &> /dev/null\n";
+        $gencmds .= "/sbin/ip link delete $name >/dev/null 2>&1\n";
     }
 
     return;
